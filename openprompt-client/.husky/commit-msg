@@ -1,0 +1,19 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+NORMAL='\033[0m'
+BLUE='\033[0;34m'
+IGREEN='\033[0;92m'
+IRED='\033[0;91m'
+
+echo -e "\n${BLUE}husky commit-msg hook을 실행합니다.${NORMAL}\n"
+
+commitMessage=$(cat "$1")
+commitRegex="^(feat|fix|docs|style|refactor|test|chore|modify): .*"
+
+if ! [[ $commitMessage =~ $commitRegex ]]; then
+  echo -e "${IRED}ERROR: commit message does not follow the convention '<type>: <message>' where <type> is one of ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'modify']${NORMAL}"
+  exit 1
+fi
+
+echo -e "\n${BLUE}husky commit-msg hook을 종료합니다.${NORMAL}\n"
